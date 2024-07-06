@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Parsing Platform</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vacancies</h1>
+    <ul>
+    {% for vacancy in vacancies %}
+        <li>
+            <strong>{{ vacancy.title }}</strong><br>
+            <em>{{ vacancy.city }}</em><br>
+            <span>Salary: {{ vacancy.salary_from }} - {{ vacancy.salary_to }} {{ vacancy.currency }}</span><br>
+            <p>{{ vacancy.description | safe }}</p>
+            <p>Requirements: {{ vacancy.requirements | safe }}</p>
+            <p>Responsibilities: {{ vacancy.responsibilities | safe }}</p>
+            <p><strong>Employer name:</strong> {{ vacancy.employer_name }}</p>
+            <p><strong>Published at:</strong> {{ vacancy.published_at }}</p>
+            <p><a href="https://hh.ru/vacancy/{{ vacancy.id }}" target="_blank">View on hh.ru</a></p>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <h2>Search Vacancies</h2>
+    <form method="post" action="{% url 'search_vacancy' %}">
+        {% csrf_token %}
+        <label for="search_query">Search Query:</label>
+        <input type="text" id="search_query" name="search_query"><br>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city"><br>
+
+        <label for="min_salary">Minimum Salary:</label>
+        <input type="number" id="min_salary" name="min_salary"><br>
+
+        <label for="max_salary">Maximum Salary:</label>
+        <input type="number" id="max_salary" name="max_salary"><br>
+
+        <button type="submit">Search</button>
+    </form>
+</body>
+</html>

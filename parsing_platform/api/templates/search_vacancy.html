@@ -1,0 +1,38 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vacancies</title>
+</head>
+<body>
+    <h1>Vacancies</h1>
+    {% if vacancies %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>City</th>
+                    <th>Salary From</th>
+                    <th>Salary To</th>
+                    <th>Employer</th>
+                    <th>Published At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vacancy in vacancies %}
+                    <tr>
+                        <td>{{ vacancy.title }}</td>
+                        <td>{{ vacancy.city }}</td>
+                        <td>{{ vacancy.salary_from }}</td>
+                        <td>{{ vacancy.salary_to }}</td>
+                        <td>{{ vacancy.employer_name }}</td>
+                        <td>{{ vacancy.published_at }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No vacancies found.</p>
+    {% endif %}
+</body>
+</html>

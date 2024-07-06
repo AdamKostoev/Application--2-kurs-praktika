@@ -1,0 +1,5 @@
+Django>=3.0,<4.0
+mysqlclient
+requests~=2.32.3
+mysql~=0.0.3
+mysql-connector-python~=9.0.0
