@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Vacancies</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>All Vacancies</h1>
+    <ul>
+    {% for vacancy in vacancies %}
+        <li>
+            <strong>{{ vacancy.title }}</strong><br>
+            <em>{{ vacancy.city }}</em><br>
+            <span>Salary: {{ vacancy.salary_from }} - {{ vacancy.salary_to }} {{ vacancy.currency }}</span><br>
+            <p>{{ vacancy.description | safe }}</p>
+            <p>Requirements: {{ vacancy.requirements | safe }}</p>
+            <p>Responsibilities: {{ vacancy.responsibilities | safe }}</p>
+            <p><strong>Employer name:</strong> {{ vacancy.employer_name }}</p>
+            <p><strong>Published at:</strong> {{ vacancy.published_at }}</p>
+            <p><strong>Required experience:</strong> {{ vacancy.experience }}</p>
+            <p><strong>Employment:</strong> {{ vacancy.employment }}</p>
+            {% if vacancy.remote_work %}
+                <p><strong>Remote work:</strong> Yes</p>
+            {% else %}
+                <p><strong>Remote work:</strong> No</p>
+            {% endif %}
+            <p><a href="https://hh.ru/vacancy/{{ vacancy.id }}" target="_blank">View on hh.ru</a></p>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'index' %}">Back to Search</a></p>
+</body>
+</html>

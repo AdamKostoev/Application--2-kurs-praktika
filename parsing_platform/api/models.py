@@ -1,6 +1,8 @@
 from django.db import models
 
+
 class Vacancy(models.Model):
+
     id = models.CharField(max_length=255, primary_key=True)
     title = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
@@ -12,6 +14,9 @@ class Vacancy(models.Model):
     responsibilities = models.TextField()
     employer_name = models.CharField(max_length=255)
     published_at = models.DateTimeField()
+    experience = models.CharField(max_length=255, null=True, blank=True)
+    employment = models.CharField(max_length=255, null=True, blank=True)
+    remote_work = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

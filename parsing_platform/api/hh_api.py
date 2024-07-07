@@ -18,7 +18,7 @@ class HHAPI:
     def search_vacancies(query):
         params = {
             'text': query,
-            'per_page': 10  # ограничим количество результатов
+            'per_page': 20  # ограничим количество результатов
         }
         response = requests.get(f'{HHAPI.BASE_URL}vacancies', params=params)
         if response.status_code == 200:

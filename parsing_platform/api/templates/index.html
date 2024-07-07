@@ -17,18 +17,24 @@
             <strong>{{ vacancy.title }}</strong><br>
             <em>{{ vacancy.city }}</em><br>
             <span>Salary: {{ vacancy.salary_from }} - {{ vacancy.salary_to }} {{ vacancy.currency }}</span><br>
-            <p>{{ vacancy.description | safe }}</p>
             <p>Requirements: {{ vacancy.requirements | safe }}</p>
             <p>Responsibilities: {{ vacancy.responsibilities | safe }}</p>
             <p><strong>Employer name:</strong> {{ vacancy.employer_name }}</p>
             <p><strong>Published at:</strong> {{ vacancy.published_at }}</p>
+            <p><strong>Required experience:</strong> {{ vacancy.experience }}</p>
+            <p><strong>Employment:</strong> {{ vacancy.employment }}</p>
+            {% if vacancy.remote_work %}
+                <p><strong>Remote work:</strong> Yes</p>
+            {% else %}
+                <p><strong>Remote work:</strong> No</p>
+            {% endif %}
             <p><a href="https://hh.ru/vacancy/{{ vacancy.id }}" target="_blank">View on hh.ru</a></p>
         </li>
     {% endfor %}
     </ul>
 
     <h2>Search Vacancies</h2>
-    <form method="post" action="{% url 'search_vacancy' %}">
+    <form method="post" action="{% url 'index' %}">
         {% csrf_token %}
         <label for="search_query">Search Query:</label>
         <input type="text" id="search_query" name="search_query"><br>
@@ -44,5 +50,40 @@
 
         <button type="submit">Search</button>
     </form>
+
+    <p><a href="{% url 'all_vacancies' %}">View All Vacancies</a></p>
 </body>
 </html>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('form').submit(function(event) {
+        event.preventDefault(); // Предотвращаем стандартное поведение формы
+
+        var searchQuery = $('#search_query').val();
+        var city = $('#city').val();
+        var minSalary = $('#min_salary').val();
+        var maxSalary = $('#max_salary').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url "index" %}',
+            data: {
+                'search_query': searchQuery,
+                'city': city,
+                'min_salary': minSalary,
+                'max_salary': maxSalary,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(data) {
+                $('ul.vacancies').html(data); // Обновляем список вакансий
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+});
+
+</script>
