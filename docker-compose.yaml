@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   db:
-    image: mysql:5.7
+    image: mysql:9.0
     environment:
       MYSQL_DATABASE: parsing_db
       MYSQL_ROOT_PASSWORD: Dragon06$
